@@ -59,6 +59,11 @@ export const Form = styled.form`
         &:hover {
             filter: opacity(0.9);
         }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     }
 
 `;

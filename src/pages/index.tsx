@@ -31,16 +31,16 @@ export default function Home(): JSX.Element {
           <h2>Boas vindas a Vila da Folha</h2>
           <h3>Aluracord - Alura Naruto</h3>
           <input type="text" value={user.nickname} onChange={handleChangeUser} placeholder='Seu usuário no Github' />
-          <button>Entrar</button>
+          <button disabled={user.nickname.length < 2}>Entrar</button>
         </S.Form>
-        <S.GitHubAvatar>
-          { user.nickname && (
-            <>
-              <Image src={`https://github.com/${user.nickname}.png`} alt={user.nickname} width={200} height={200} />
-              <span>{user.nickname}</span>
-            </>
+          { user.nickname.length >= 2 && (
+            <S.GitHubAvatar>
+                <>
+                  <Image src={`https://github.com/${user.nickname}.png`} alt={user.nickname} width={200} height={200} />
+                  <span>{user.nickname}</span>
+                </>
+            </S.GitHubAvatar>
           )}
-        </S.GitHubAvatar>
       </S.Content>
     </S.Container>
   );
