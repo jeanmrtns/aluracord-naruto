@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as S from '../styles/HomeStyle';
+import Head from 'next/head';
 
 interface User {
   nickname: string;
@@ -26,6 +27,9 @@ export default function Home(): JSX.Element {
 
   return (
     <S.Container>
+      <Head>
+        <title>Aluracord - Naruto</title>
+      </Head>
       <S.Content>
         <S.Form onSubmit={handleSubmit}>
           <h2>Boas vindas a Vila da Folha</h2>
