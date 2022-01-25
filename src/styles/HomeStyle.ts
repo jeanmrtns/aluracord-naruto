@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.main`
     margin: 0 auto;
-    height: 100vh;
+    min-height: 100vh;
     
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@ export const Container = styled.main`
 `;
 
 export const Content = styled.section`
-    height: 40%;
+    max-height: 40%;
     background-color: #fff;
     padding: 1rem 2rem;
 
@@ -69,7 +69,7 @@ export const GitHubAvatar = styled.figure`
     border: 1px solid orange;
     border-radius: 0.25rem;
     margin-left: 10rem;
-    height: 100%;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,6 +80,7 @@ export const GitHubAvatar = styled.figure`
     }
 
     img {
+        min-height: 100%;
         border-radius: 50%;
     }
 
