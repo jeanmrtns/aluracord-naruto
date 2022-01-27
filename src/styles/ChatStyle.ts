@@ -78,12 +78,16 @@ export const Message = styled.div`
         justify-content: space-between;
 
         button {
+            align-self: flex-start;
             padding: 0.25rem;
+            min-width: 4rem;
             border-radius: 0.25rem;
             cursor: pointer;
             border: 0;
             background-color: orange;
             color: #FFF;
+            height: 3rem;
+            margin-left: 1rem;
         }
     }
 
