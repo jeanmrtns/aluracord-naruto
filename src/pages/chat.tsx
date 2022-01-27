@@ -58,6 +58,11 @@ export default function Chat(): JSX.Element {
         setNewMessage('');
     }
 
+    function removeMessage(id: number) {
+        const newMessagesList = messagesList.filter(message => message.id !== id);
+        setMessagesList(newMessagesList);
+    }
+
     return (
         <S.Container>
             <Head>
@@ -78,7 +83,8 @@ export default function Chat(): JSX.Element {
                                     <h4>{message.userName}</h4>
                                     <time>{message.createdAt}</time>
                                 </div>
-                                <p>{message.message}</p>
+                                <p>{message.message} <button onClick={() => removeMessage(message.id)} type="button">Excluir</button></p>
+                                
                             </S.Message>
                         )
                     }) }

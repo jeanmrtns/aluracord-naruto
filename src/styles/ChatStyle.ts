@@ -43,9 +43,10 @@ export const Chat = styled.div`
 `;
 
 export const Message = styled.div`
-
     font-family: sans-serif;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
 
     :not(:first-of-type) {
         margin-top: 1rem;
@@ -68,6 +69,21 @@ export const Message = styled.div`
             font-size: 0.5rem;
             font-weight: bold;
             color: #aaa;
+        }
+    }
+
+    p {
+      display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        button {
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            border: 0;
+            background-color: orange;
+            color: #FFF;
         }
     }
 
