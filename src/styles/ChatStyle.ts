@@ -34,7 +34,7 @@ export const Header = styled.header`
 `;
 
 export const Chat = styled.div`
-    background-color: #e7e7e3;
+    background-color: #F9F9F9;
     height: 100%;
     width: 100%;
     padding: 2rem;
@@ -126,4 +126,44 @@ export const NewMessageInput = styled.input`
     border: 1px solid orange;
     outline-color: orangered;
     font-size: 1rem;
+`;
+
+export const LoadSpinner = styled.div`
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    border: 1px solid #030303;
+    border-right: none;
+    animation: rotating 1s linear infinite;
+    margin: 0 auto;
+
+    @-webkit-keyframes rotating {
+        from {
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes rotating {
+        from {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        to {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
 `;

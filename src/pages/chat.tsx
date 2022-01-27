@@ -1,68 +1,70 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../styles/ChatStyle";
+import { supabase } from "../utils/supabaseClient";
+import { format } from 'date-fns';
 
 interface Message {
     id: number;
     user: string;
-    userName: string;
-    message: string;
-    createdAt: string;
+    user_name: string;
+    message_text: string;
+    created_at: Date;
 }
-
-const messages = [
-    {
-        id: 1,
-        user: 'jeanmrtns',
-        userName: 'Jean Martins',
-        message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste accusantium, animi impedit voluptates cumque voluptatum ut! Vitae necessitatibus quibusdam quisquam fuga aspernatur eum magni, aliquam laborum. Iste veniam qui sequi.',
-        createdAt: '17/01/2021'
-    },
-    {
-        id: 2,
-        user: 'peas',
-        userName: 'Paulo Silveira',
-        message: 'Isso aqui foi muito legal',
-        createdAt: '17/01/2021'
-    },
-    {
-        id: 3,
-        user: 'jeanmrtns',
-        userName: 'Jean Martins',
-        message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste accusantium, animi impedit voluptates cumque voluptatum ut! Vitae necessitatibus quibusdam quisquam fuga aspernatur eum magni, aliquam laborum. Iste veniam qui sequi.',
-        createdAt: '18/01/2021'
-    },
-]
 
 export default function Chat(): JSX.Element {
 
     const [newMessage, setNewMessage] = useState('');
-    const [messagesList, setMessagesList] = useState<Message[]>(messages);
+    const [messagesList, setMessagesList] = useState<Message[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    async function loadMessages() {
+        setLoading(true);
+        const response = await supabase.from('messages')
+        .select('id, created_at, user, user_name, message_text');
+
+        const messages = response.data.map(message => {
+            return {
+                ...message,
+                created_at: format(new Date(message.created_at), 'dd/MM/yyyy')
+            }
+        });
+        setMessagesList(messages);
+        setLoading(false);
+    }
 
     function handleChangeNewMessage(e: ChangeEvent<HTMLInputElement>) {
         const message = e.target.value;
         setNewMessage(message);
     }
 
-    function handleSendNewMessage() {
-        setMessagesList([...messagesList, {
-            id: messagesList.length + 1,
-            createdAt: '27/01/2022',
-            message: newMessage,
-            user: 'jeanmrtns',
-            userName: 'Jean'
+    async function handleSendNewMessage() {
+        await supabase.from('messages').insert([{
+            user: 'Jean',
+            user_name: 'jeanmrtns',
+            message_text: newMessage
         }]);
 
+        loadMessages();
         setNewMessage('');
     }
 
-    function removeMessage(id: number) {
+    async function removeMessage(id: number) {
         const newMessagesList = messagesList.filter(message => message.id !== id);
         setMessagesList(newMessagesList);
+        await supabase.from('messages')
+        .delete()
+        .match({id});
+
+        loadMessages();
     }
 
+    useEffect(() => {       
+        loadMessages();
+    }, []);
+    
     return (
         <S.Container>
             <Head>
@@ -75,19 +77,20 @@ export default function Chat(): JSX.Element {
                 </S.Header>
 
                 <S.Chat>
-                    { messagesList.map(message => {
+                    { loading && <S.LoadSpinner /> }
+                    { messagesList.length ? messagesList.map(message => {
                         return (
                             <S.Message key={message.id}>
                                 <div>
-                                    <Image src={`https://github.com/${message.user}.png`} alt={message.user} width={30} height={30} />
-                                    <h4>{message.userName}</h4>
-                                    <time>{message.createdAt}</time>
+                                    <Image src={`https://github.com/${message.user_name}.png`} alt={message.user} width={30} height={30} />
+                                    <h4>{message.user_name}</h4>
+                                    <time>{message.created_at}</time>
                                 </div>
-                                <p>{message.message} <button onClick={() => removeMessage(message.id)} type="button">Excluir</button></p>
+                                <p>{message.message_text} <button onClick={() => removeMessage(message.id)} type="button">Excluir</button></p>
                                 
                             </S.Message>
                         )
-                    }) }
+                    }) : (<h1>Ooops. Nenhuma mensagem ainda</h1>)}
                 </S.Chat>
 
                 <S.Footer>
