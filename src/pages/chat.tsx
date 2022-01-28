@@ -5,6 +5,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../styles/ChatStyle";
 import { supabase } from "../utils/supabaseClient";
 import { format } from 'date-fns';
+import { useRouter } from "next/router";
+import { ButtonStickers } from "../components/ButtonStickers";
 
 interface Message {
     id: number;
@@ -16,6 +18,8 @@ interface Message {
 
 export default function Chat(): JSX.Element {
 
+    const router = useRouter();
+    const activeUser = router.query.username as string;
     const [newMessage, setNewMessage] = useState('');
     const [messagesList, setMessagesList] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false);
@@ -42,8 +46,8 @@ export default function Chat(): JSX.Element {
 
     async function handleSendNewMessage() {
         await supabase.from('messages').insert([{
-            user: 'Jean',
-            user_name: 'jeanmrtns',
+            user: activeUser,
+            user_name: activeUser,
             message_text: newMessage
         }]);
 
@@ -63,7 +67,7 @@ export default function Chat(): JSX.Element {
 
     useEffect(() => {       
         loadMessages();
-    }, []);
+    }, [router, activeUser]);
     
     return (
         <S.Container>
@@ -86,8 +90,12 @@ export default function Chat(): JSX.Element {
                                     <h4>{message.user_name}</h4>
                                     <time>{message.created_at}</time>
                                 </div>
-                                <p>{message.message_text} <button onClick={() => removeMessage(message.id)} type="button">Excluir</button></p>
-                                
+                                { message.message_text.startsWith(':sticker:') ? (
+                                    <S.StickerContainer>
+                                        <S.Sticker src={message.message_text.replace(':sticker:', '')} alt={message.message_text} />
+                                        <button onClick={() => removeMessage(message.id)} type="button">X</button>
+                                    </S.StickerContainer>
+                                ) : (<p>{message.message_text} <button onClick={() => removeMessage(message.id)} type="button">Excluir</button></p>) }
                             </S.Message>
                         )
                     }) : (<h1>Ooops. Nenhuma mensagem ainda</h1>)}
@@ -106,6 +114,7 @@ export default function Chat(): JSX.Element {
                             }
                         }}
                     />
+                    <ButtonStickers sendSticker={handleSendNewMessage} setMessage={setNewMessage} />
                     <button onClick={handleSendNewMessage}>Enviar</button>
                 </S.Footer>
             </S.Content>

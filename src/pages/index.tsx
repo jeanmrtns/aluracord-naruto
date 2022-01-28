@@ -15,9 +15,7 @@ Modal.setAppElement("#__next");
 
 export default function Home(): JSX.Element {
 
-  const [user, setUser] = useState<User>({
-    nickname: 'jeanmrtns',
-  });
+  const [user, setUser] = useState<User>({nickname: 'jeanmrtns'});
 
   const [userModalOpen, setUserModalOpen] = useState(false);
 
@@ -29,7 +27,7 @@ export default function Home(): JSX.Element {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    router.push('/chat');
+    router.push(`/chat?username=${user.nickname}`);
   }
 
   async function showUserInfo(login: string) {

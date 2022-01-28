@@ -167,3 +167,19 @@ export const LoadSpinner = styled.div`
         }
     }
 `;
+
+export const Sticker = styled.img`
+    max-width: 10rem;
+    max-height: 10rem;
+`;
+
+export const StickerContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        background-color: inherit;
+        border: 0;
+        cursor: pointer;
+    }
+`;
