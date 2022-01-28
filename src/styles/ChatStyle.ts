@@ -76,6 +76,7 @@ export const Message = styled.div`
       display: flex;
         width: 100%;
         justify-content: space-between;
+        align-items: center;
 
         button {
             align-self: flex-start;
