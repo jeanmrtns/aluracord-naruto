@@ -45,6 +45,9 @@ export default function Chat(): JSX.Element {
     }
 
     async function handleSendNewMessage() {
+
+        if (!newMessage) return;
+
         await supabase.from('messages').insert([{
             user: activeUser,
             user_name: activeUser,
