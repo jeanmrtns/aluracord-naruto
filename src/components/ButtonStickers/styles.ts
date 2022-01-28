@@ -26,4 +26,9 @@ export const Modal = styled.div`
         width: 5rem;
         cursor: pointer;
     }
+
+    @media screen and (max-width: 780px) {
+        top: -30rem;
+        right: -5rem;
+    }
 `;

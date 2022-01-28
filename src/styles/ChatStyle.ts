@@ -40,6 +40,10 @@ export const Chat = styled.div`
     padding: 2rem;
 
     overflow: scroll;
+
+    @media screen and (max-width: 780px) {
+        padding: 0;
+    }
 `;
 
 export const Message = styled.div`
@@ -70,10 +74,25 @@ export const Message = styled.div`
             font-weight: bold;
             color: #aaa;
         }
+
+        @media screen and (max-width: 780px) {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            h4 {
+                display: none;
+            }
+
+            time {
+                margin-top: 0.25rem;
+                font-size: 0.4rem;
+            }
+        }
     }
 
     p {
-      display: flex;
+        display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: center;
@@ -89,6 +108,20 @@ export const Message = styled.div`
             color: #FFF;
             height: 3rem;
             margin-left: 1rem;
+        }
+
+        @media screen and (max-width: 780px) {
+            flex-direction: column;
+            align-items: flex-start;
+
+            button {
+                margin-top: 0.25rem;
+                margin-left: 0;
+                height: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 
@@ -116,6 +149,10 @@ export const Footer = styled.footer`
             background-color: orange;
             color: #fff;
         }
+
+        @media screen and (max-width: 780px) {
+            padding: 0.5rem;
+        }
     }
 `;
 
@@ -127,6 +164,12 @@ export const NewMessageInput = styled.input`
     border: 1px solid orange;
     outline-color: orangered;
     font-size: 1rem;
+
+    @media screen and (max-width: 780px) {
+        ::placeholder {
+            font-size: 0.75rem;
+        }
+    }
 `;
 
 export const LoadSpinner = styled.div`
