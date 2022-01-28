@@ -67,6 +67,9 @@ export default function Chat(): JSX.Element {
 
     useEffect(() => {       
         loadMessages();
+        supabase.from('messages')
+        .on('*', loadMessages)
+        .subscribe()
     }, [router, activeUser]);
     
     return (
